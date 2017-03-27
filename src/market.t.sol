@@ -1,8 +1,7 @@
 pragma solidity ^0.4.8;
 
-import "dapple/test.sol";
+import "ds-test/test.sol";
 import "./market.sol";
-import "./token.sol";
 
 contract MarketTester {
     Market market;
@@ -20,7 +19,7 @@ contract MarketTester {
     }*/
 }
 
-contract MarketTest is Test
+contract MarketTest is DSTest
 {
     Market market;
     MarketTester user;
@@ -30,8 +29,8 @@ contract MarketTest is Test
     function setUp() {
         market = new Market();
 
-        weth = new Token(1000000000000000000000000);
-        mkr = new Token(1000000000000000000000000);
+        weth = new ERC20(1000000000000000000000000);
+        mkr = new ERC20(1000000000000000000000000);
     }
 
     function test_verify_message_hash() {
@@ -50,13 +49,21 @@ contract MarketTest is Test
     }
 
     function test_signer() {
-        uint8 v = 28;
-        bytes32 r = 0x5c9a0501a6d4a6afeaf5c34b72cabec55494792c913541d7c84b1fedc98ac500;
-        bytes32 s = 0x1aa87cd29d16b8b0d509a74947cc57f7dcfce5595578cbc572fc1749a31a8729;
+        // uint8 v = 28;
+        // bytes32 r = 0x5c9a0501a6d4a6afeaf5c34b72cabec55494792c913541d7c84b1fedc98ac500;
+        // bytes32 s = 0x1aa87cd29d16b8b0d509a74947cc57f7dcfce5595578cbc572fc1749a31a8729;
 
-        address seller = market.getSellerFromSignature('5351ee8451854dd991e654a18de5cabf', '0xecE9Fa304cC965B00afC186f5D0281a00D3dbBFD',
-                                                        '0xA7F6C9A5052a08a14ff0e3349094B6EFBc591Ea4', 200000000000000000000, 100000000000000000000,
-                                                        1234567891011, v, r, s);
+        // address seller = market.getSellerFromSignature('5351ee8451854dd991e654a18de5cabf', '0xecE9Fa304cC965B00afC186f5D0281a00D3dbBFD',
+        //                                                 '0xA7F6C9A5052a08a14ff0e3349094B6EFBc591Ea4', 200000000000000000000, 100000000000000000000,
+        //                                                 1234567891011, v, r, s);
+
+        uint8 v = 28;
+        bytes32 r = 0x6fa1d26ec843bfc48b76756be2c5608e605dda0758644db8246b0fc1bedb634e;
+        bytes32 s = 0x0047f3b8e2d2ff3e596ca1b83692206e68d9799d8422d8021cf80209ec745c9c;
+
+        address seller = market.getSellerFromSignature('a5b55674f2ca5baa4ae886aec812db3c', 0x4bb514a7f83fbb13c2b41448208e89fabbcfe2fb,
+                                                        0x53eccc9246c1e537d79199d0c7231e425a40f896, 1000000000000000000, 1200000000000000000,
+                                                        1234, v, r, s);
 
         //@log Signer: `address seller`
 

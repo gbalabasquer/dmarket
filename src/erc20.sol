@@ -1,13 +1,15 @@
 pragma solidity ^0.4.8;
 
-import 'erc20/erc20.sol';
-
-contract Token is ERC20
+contract ERC20
 {
     mapping( address => uint ) _balances;
     mapping( address => mapping( address => uint ) ) _approvals;
     uint _supply;
-    function Token( uint initial_balance ) {
+
+    event Transfer( address indexed from, address indexed to, uint value);
+    event Approval( address indexed owner, address indexed spender, uint value);
+
+    function ERC20( uint initial_balance ) {
         _balances[msg.sender] = initial_balance;
         _supply = initial_balance;
     }
